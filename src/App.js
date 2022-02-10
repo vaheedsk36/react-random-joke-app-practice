@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from 'react';
 
 function App() {
+
+  const [jokeData,setJokeData] = useState();
+
+  const fetchData = ()=>{
+    fetch('http://api.icndb.com/jokes/random')
+    .then(res=>res.json())
+    .then((data)=>{setJokeData(data.value.joke)});
+
+ 
+  }
+  window.onload=()=>{
+    fetchData();
+  }
+  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      
+      <div className="random-div">
+      <h1>Random Jokes Generator</h1>
+      <div className='container'>
+      
+      <h5> {jokeData} </h5>
+      
+      </div>
+      <button type="submit" onClick = {fetchData}>Click Me</button>
+      </div>
+      </div>
   );
 }
 
